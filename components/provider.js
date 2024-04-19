@@ -10,7 +10,8 @@ export function AppProvider({
 }){
 
     const produtos = [{ Id: 1, Titulo: 'Memoria ram ddr5 16gb', Valor: 'R$ 400,00', Descricao: 'uma memoria muito boa, compre' },
-    { Id: 2, Titulo: 'Ssd nvme gen 4 m2 1tb', Valor: 'R$ 500,00', Descricao: 'seria um otimo presente de aniversário' }];
+    { Id: 2, Titulo: 'Ssd nvme gen 4 m2 1tb', Valor: 'R$ 500,00', Descricao: 'seria um otimo presente de aniversário' },
+    {Id: 3, Titulo: 'canivete de notebook', Valor: 'R$ 170,00', Descricao: 'mantem seus arquivos defendidos' }];
     const [carrinho, setCarrinho] = useState([]);
     const [total, setTotal] = useState(0)
     useEffect(() => {

@@ -21,38 +21,24 @@ export default function Listagem() {
         console.log(total)
         console.log(carrinho)
     }, [carrinho]);
-
+    const getAvatarLetters = (title) => {
+        const words = title.trim().split(' ');
+        if (words.length > 1) {
+            return (words[0][0] + words[words.length - 1][0]).toUpperCase();
+        }
+        return title.substring(0, 2).toUpperCase();
+    };
     return (
         <SafeAreaView>
             <View>
-                
+
                 <Text>Loja do Jack</Text>
                 <FlatList
                     data={produtos}
                     keyExtractor={(item) => item.Id.toString()}
                     ItemSeparatorComponent={Divider}
                     renderItem={({ item }) => (
-                        <View style={{ padding: 10 }}>
-                            <Text style={{ fontSize: 18, fontWeight: 'bold' }}>{item.Titulo}</Text>
-                            <Text>{item.Descricao} - {item.Valor}</Text>
-                            <Button
-                                mode='contained'
-                                labelStyle={{ color: 'white' }}
-                                onPress={() => adicionarProduto(item.Id)}
-
-                            >
-                                +
-                            </Button>
-                            {carrinho.some(produto => produto.Id === item.Id) && (
-                                <Button
-                                    mode='contained'
-                                    onPress={() => removerProduto(item.Id)}
-                                    labelStyle={{ color: 'white' }}
-                                >
-                                    -
-                                </Button>
-                            )}
-                        </View>
+                        <Produto item={item}></Produto>
                     )}
                 />
             </View>

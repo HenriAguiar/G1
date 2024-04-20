@@ -14,9 +14,21 @@ import {
 import { useAppContext } from './provider';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
-export default function Produto(item) {
-    const avatarLabel = (primeiroNome[0] + (ultimoSobrenome ? ultimoSobrenome[0] : '')).toUpperCase();
+export default function Produto({item}) {
+    console.log("bananaaaaaaaaaaaaaa")
+    console.log({item})
+    const { carrinho, adicionarProduto, removerProduto, } = useAppContext();
+    const getAvatarLetters = (title) => {
+        const words = title.trim().split(' ');
+        if (words.length > 1) {
+            return (words[0][0] + words[words.length - 1][0]).toUpperCase();
+        }
+        return title.substring(0, 2).toUpperCase();
+    };
+
     return (
+        <View>
+        <Avatar.Text size={40} label={getAvatarLetters(item.Titulo)} />
         <View style={{ padding: 10 }}>
             <Text style={{ fontSize: 18, fontWeight: 'bold' }}>{item.Titulo}</Text>
             <Text>{item.Descricao} - {item.Valor}</Text>
@@ -38,5 +50,6 @@ export default function Produto(item) {
                 </Button>
             )}
         </View>
+    </View>
     )
 }

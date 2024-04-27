@@ -9,19 +9,17 @@ export function AppProvider({
     onSelecionarProduto,
 }){
 
-    const produtos = [{ Id: 1, Titulo: 'Memoria ram ddr5 16gb', Valor: 'R$ 400,00', Descricao: 'uma memoria muito boa, compre' },
-    { Id: 2, Titulo: 'Ssd nvme gen 4 m2 1tb', Valor: 'R$ 500,00', Descricao: 'seria um otimo presente de aniversário' },
-    {Id: 3, Titulo: 'canivete de notebook', Valor: 'R$ 170,00', Descricao: 'mantem seus arquivos defendidos' }];
+    const produtos = [{ Id: 1, Titulo: 'Memoria ram ddr5 16gb', Valor: 400, Descricao: 'uma memoria muito boa, compre' },
+    { Id: 2, Titulo: 'Ssd nvme gen 4 m2 1tb', Valor: 500, Descricao: 'seria um otimo presente de aniversário' },
+    {Id: 3, Titulo: 'canivete de notebook', Valor: 170, Descricao: 'mantem seus arquivos defendidos' }];
     const [carrinho, setCarrinho] = useState([]);
     const [total, setTotal] = useState(0)
-    useEffect(() => {
-        obterSoma();
-    }, [carrinho]);
+
     const adicionarProduto = (id) => {
         const produto = produtos.find((produto) => produto.Id===id);
         if (produto){
         const lista = [...carrinho, produto];
-        setCarrinho(lista);
+        setCarrinho(lista);     
     }
     };
     const removerProduto = (id) => {
@@ -37,16 +35,24 @@ export function AppProvider({
     const obterSoma = () => {
         let total = 0;
         for (let item of carrinho) {
-            const valorLimpo = parseFloat(item.Valor.replace('R$ ', '').replace(',', '.'));
-            total += valorLimpo;
+            total += item.Valor;
         }
         setTotal(total)
     };
+    const formatarMoeda = (valor) => {
+        console.log("aaa")
+        console.log({valor})
 
+        return valor.toLocaleString('pt-BR', {
+            style: 'currency',
+            currency: 'BRL'
+        });
+    };
     return (
         <AppContext.Provider
           value={{
             produtos,
+            formatarMoeda,
             adicionarProduto,
             removerProduto,
             obterSoma,

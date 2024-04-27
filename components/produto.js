@@ -1,9 +1,10 @@
 import { View, Text, StyleSheet } from 'react-native';
 import { Button, Avatar } from 'react-native-paper';
 import { useAppContext } from './provider';
+import { useEffect } from 'react';
 
 export default function Produto({ item }) {
-    const { carrinho, adicionarProduto, removerProduto } = useAppContext();
+    const { carrinho, adicionarProduto, removerProduto, formatarMoeda } = useAppContext();
     const getAvatarLetters = (title) => {
         const words = title.trim().split(' ');
         if (words.length > 1) {
@@ -11,18 +12,20 @@ export default function Produto({ item }) {
         }
         return title.substring(0, 2).toUpperCase();
     };
+    useEffect(() => {
+    }, [carrinho]);
 
     return (
         <View style={styles.itemContainer}>
-            <Avatar.Text 
-                size={64} 
-                label={getAvatarLetters(item.Titulo)} 
+            <Avatar.Text
+                size={64}
+                label={getAvatarLetters(item.Titulo)}
                 style={styles.avatar}
             />
             <View style={styles.infoContainer}>
                 <Text style={styles.titulo}>{item.Titulo}</Text>
                 <Text style={styles.descricao}>{item.Descricao}</Text>
-                <Text style={styles.preco}>{item.Valor}</Text>
+                <Text style={styles.preco}>{formatarMoeda(item.Valor)}</Text>
             </View>
             <View style={styles.botoesContainer}>
                 <Button
@@ -30,13 +33,13 @@ export default function Produto({ item }) {
                     mode='contained'
                     onPress={() => adicionarProduto(item.Id)}
                 />
-                {carrinho.some(produto => produto.Id === item.Id) && (
-                    <Button
-                        icon="minus"
-                        mode='contained'
-                        onPress={() => removerProduto(item.Id)}
-                    />
-                )}
+                <Button
+                    icon="minus"
+                    mode='contained'
+                    onPress={() => removerProduto(item.Id)}
+                    disabled={!carrinho.some(produto => produto.Id === item.Id)}
+
+                />
             </View>
         </View>
     );
@@ -70,6 +73,6 @@ const styles = StyleSheet.create({
         flexDirection: 'col',
         alignItems: 'center',
         justifyContent: 'space-between',
-        
+
     },
 });

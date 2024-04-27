@@ -1,18 +1,16 @@
 
 import { View, SafeAreaView } from 'react-native';
-import {
-    Text,
-} from 'react-native-paper';
+import { Text } from 'react-native-paper';
 import { useAppContext } from './provider';
+import { useEffect } from 'react';
 
 export default function Footer() {
-    const { total } = useAppContext();
-    const formatarMoeda = (valor) => {
-        return valor.toLocaleString('pt-BR', {
-            style: 'currency',
-            currency: 'BRL'
-        });
-    };
+
+    const { carrinho, obterSoma,total, formatarMoeda } = useAppContext();
+
+    useEffect(() => {
+        obterSoma()
+    }, [carrinho]);
     return (
         <SafeAreaView>
             <View>
